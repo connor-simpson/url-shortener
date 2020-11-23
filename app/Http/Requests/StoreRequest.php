@@ -25,7 +25,9 @@ class StoreRequest extends FormRequest
     {
         return [
             'url' => 'required|url',
-            'description' => 'nullable|string|max:140'
+            'description' => 'nullable|string|max:140',
+            'shortcode' => 'nullable|exists:dictionary,id,used,0',
+            'custom_shortcode' => 'nullable|unique:short_urls,short_url'
         ];
     }
 
@@ -37,7 +39,9 @@ class StoreRequest extends FormRequest
         return [
             'url.required' => 'You haven\'t entered a URL to shorten!',
             'url.url' => 'That isn\'t a valid URL!', 
-            'description.max' => "Your description cannot be longer than 140 characters!"
+            'description.max' => "Your description cannot be longer than 140 characters!",
+            'shortcode.exists' => "That shortcode doesn't exist or has already been used!",
+            'custom_shortcode.unique' => "You cannot use that custom shortcode as it already exists!"
         ];
     }
 }
